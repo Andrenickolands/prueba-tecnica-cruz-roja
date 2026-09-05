@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "dev": "nodemon src/server.js",
-  "start": "node src/server.js",
-  "migrate": "node src/db/runMigrations.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
-},
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "migrate": "node src/db/runMigrations.js",
+    "test:concurrency": "node scripts/concurrency-test.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
