@@ -89,6 +89,97 @@ button {
   outline-offset: 2px;
 }
 
+/* Modal eliminar */
+
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(31, 35, 40, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--espacio-md);
+}
+
+.modal-contenido {
+  background-color: var(--blanco);
+  border-radius: var(--radio-borde);
+  padding: var(--espacio-lg);
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-contenido h3 {
+  font-size: var(--tamano-subtitulo);
+  margin-bottom: var(--espacio-sm);
+}
+
+.modal-contenido p {
+  color: var(--gris-piedra);
+  margin-bottom: var(--espacio-lg);
+}
+
+.modal-acciones {
+  display: flex;
+  gap: var(--espacio-sm);
+  justify-content: flex-end;
+}
+
+.modal-boton-primario,
+.modal-boton-secundario {
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: var(--radio-borde-pequeno);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-boton-primario {
+  background-color: var(--color-error);
+  color: var(--blanco);
+}
+
+.modal-boton-secundario {
+  background-color: var(--piedra-clara);
+  color: var(--carbon);
+}
+
+.modal-boton-primario:disabled,
+.modal-boton-secundario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Estado vacío dentro de inscripciones */
+
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--espacio-xl) var(--espacio-md);
+  color: var(--gris-piedra);
+}
+
+.estado-vacio svg {
+  color: var(--gris-piedra);
+  opacity: 0.5;
+  margin-bottom: var(--espacio-md);
+}
+
+.estado-vacio-titulo {
+  font-weight: 700;
+  font-size: var(--tamano-texto-base);
+  color: var(--carbon);
+  margin-bottom: var(--espacio-xs);
+}
+
+.estado-vacio-descripcion {
+  font-size: var(--tamano-texto-pequeno);
+  max-width: 320px;
+}
+
 /* ============================================================
    BREAKPOINTS ESTÁNDAR DEL PROYECTO
    Mobile pequeño:    hasta 479px

@@ -1,0 +1,279 @@
+/* ---------- Encabezado ---------- */
+.encabezado {
+  border-top: 4px solid var(--rojo-cruz);
+  background-color: var(--blanco);
+  padding: var(--espacio-lg) 0;
+  position: relative;
+}
+
+.logoWrapper {
+  position: absolute;
+  left: var(--espacio-lg);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.encabezadoContenido {
+  max-width: var(--ancho-maximo-contenido);
+  margin: 0 auto;
+  padding: 0 var(--espacio-md);
+}
+
+.volver {
+  font-size: var(--tamano-texto-pequeno);
+  font-weight: 600;
+  color: var(--rojo-cruz);
+}
+
+.volver:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Layout general ---------- */
+.contenedor {
+  max-width: var(--ancho-maximo-contenido);
+  margin: 0 auto;
+  padding: var(--espacio-lg) var(--espacio-md) var(--espacio-xl);
+}
+
+.contenedor h2 {
+  font-size: var(--tamano-subtitulo);
+  font-weight: 700;
+  margin-bottom: var(--espacio-md);
+}
+
+.resumenJornada {
+  background-color: var(--blanco);
+  border-radius: var(--radio-borde);
+  padding: var(--espacio-lg);
+  margin-bottom: var(--espacio-xl);
+  border: 1px solid rgba(31, 35, 40, 0.08);
+}
+
+.resumenJornada h1 {
+  font-size: var(--tamano-titulo);
+  font-weight: 700;
+  margin-bottom: var(--espacio-sm);
+}
+
+.meta {
+  color: var(--gris-piedra);
+  font-size: var(--tamano-texto-pequeno);
+  margin-bottom: var(--espacio-xs);
+}
+
+.avisoInactiva {
+  margin-top: var(--espacio-md);
+  padding: var(--espacio-sm) var(--espacio-md);
+  background-color: var(--ambar-cupo-fondo);
+  color: var(--ambar-cupo);
+  border-radius: var(--radio-borde-pequeno);
+  font-weight: 600;
+  font-size: var(--tamano-texto-pequeno);
+}
+
+/* ---------- Sección de inscripción ---------- */
+.seccionInscripcion {
+  margin-bottom: var(--espacio-xl);
+}
+
+.sinCupoAviso {
+  background-color: var(--ambar-cupo-fondo);
+  color: var(--ambar-cupo);
+  padding: var(--espacio-lg);
+  border-radius: var(--radio-borde);
+  font-weight: 600;
+}
+
+/* ---------- Formulario de inscripción ---------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-md);
+  max-width: 420px;
+  background-color: var(--blanco);
+  padding: var(--espacio-lg);
+  border-radius: var(--radio-borde);
+  border: 1px solid rgba(31, 35, 40, 0.08);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xs);
+}
+
+.campo label {
+  font-size: var(--tamano-texto-pequeno);
+  font-weight: 700;
+  color: var(--gris-piedra);
+}
+
+.campo input,
+.campo select {
+  padding: 10px var(--espacio-sm);
+  border: 1.5px solid rgba(31, 35, 40, 0.15);
+  border-radius: var(--radio-borde-pequeno);
+  font-size: var(--tamano-texto-base);
+  background-color: var(--blanco);
+  transition: border-color 0.15s ease;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: var(--rojo-cruz);
+}
+
+.listaErrores {
+  background-color: var(--color-error-fondo);
+  color: var(--color-error);
+  font-size: var(--tamano-texto-pequeno);
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: var(--radio-borde-pequeno);
+  font-weight: 600;
+}
+
+.mensajeExito {
+  background-color: var(--verde-cupo-fondo);
+  color: var(--verde-cupo);
+  font-size: var(--tamano-texto-pequeno);
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: var(--radio-borde-pequeno);
+  font-weight: 600;
+}
+
+.formulario button {
+  padding: 12px var(--espacio-md);
+  background-color: var(--rojo-cruz);
+  color: var(--blanco);
+  border: none;
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  font-size: var(--tamano-texto-base);
+  font-weight: 700;
+  transition: background-color 0.15s ease;
+  align-self: flex-start;
+}
+
+.formulario button:hover:not(:disabled) {
+  background-color: var(--rojo-oscuro);
+}
+
+.formulario button:disabled {
+  background-color: var(--gris-piedra);
+  cursor: not-allowed;
+}
+
+/* ---------- Listado de inscritos ---------- */
+.listaInscritos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-sm);
+}
+
+.itemInscrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--blanco);
+  padding: var(--espacio-md);
+  border-radius: var(--radio-borde-pequeno);
+  border: 1px solid rgba(31, 35, 40, 0.08);
+}
+
+.nombreInscrito {
+  font-weight: 600;
+}
+
+.accionesInscrito {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--espacio-xs);
+}
+
+.botonCancelar {
+  padding: var(--espacio-xs) var(--espacio-md);
+  background-color: var(--blanco);
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  font-size: var(--tamano-texto-pequeno);
+  font-weight: 700;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.botonCancelar:hover:not(:disabled) {
+  background-color: var(--color-error);
+  color: var(--blanco);
+}
+
+.botonCancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorInline {
+  color: var(--color-error);
+  font-size: 0.75rem;
+}
+
+.accionesJornada {
+  margin-top: var(--espacio-md);
+}
+
+.botonEliminarJornada {
+  padding: var(--espacio-sm) var(--espacio-md);
+  background-color: var(--blanco);
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  font-size: var(--tamano-texto-pequeno);
+  font-weight: 700;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.botonEliminarJornada:hover {
+  background-color: var(--color-error);
+  color: var(--blanco);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 767px) {
+  .formulario {
+    max-width: 100%;
+  }
+
+  .formulario button {
+    align-self: stretch;
+  }
+
+  .itemInscrito {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-sm);
+  }
+
+  .accionesInscrito {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .botonCancelar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  .encabezado {
+    padding-left: 70px;
+  }
+
+  .resumenJornada h1 {
+    font-size: 1.5rem;
+  }
+}
