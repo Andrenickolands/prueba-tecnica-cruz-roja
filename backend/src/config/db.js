@@ -8,6 +8,10 @@ const pool = new Pool({
   connectionTimeoutMillis: 5000,
 });
 
+pool.on('connect', async (client) => {
+  await client.query("SET client_encoding TO 'UTF8'");
+});
+
 pool.on('error', (err) => {
   console.error('Error inesperado en el pool de PostgreSQL', err);
   process.exit(-1);

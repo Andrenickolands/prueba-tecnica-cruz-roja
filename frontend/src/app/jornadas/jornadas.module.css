@@ -8,7 +8,7 @@
 
 .logoWrapper {
   position: absolute;
-  left: var(--espacio-xaxl);
+  left: var(--espacio-xxl);
   top: 50%;
   transform: translateY(-50%);
 }
