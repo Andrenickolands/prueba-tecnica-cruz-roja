@@ -1,4 +1,5 @@
 import { Public_Sans } from 'next/font/google';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 const publicSans = Public_Sans({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           Saltar al contenido principal
         </a>
         {children}
+        <Footer />
       </body>
     </html>
   );

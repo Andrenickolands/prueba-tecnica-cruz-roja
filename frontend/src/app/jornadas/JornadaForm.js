@@ -24,8 +24,49 @@ export default function JornadaForm() {
     setFormulario((valorAnterior) => ({ ...valorAnterior, [name]: value }));
   }
 
+  // Determina si un campo específico tiene error, para pintar su borde.
+  function tieneError(nombreCampo) {
+    return errores?.some((error) => error.campo === nombreCampo);
+  }
+
+  // Valida en el cliente antes de enviar, para dar feedback inmediato.
+  function validarEnCliente() {
+    const erroresCliente = [];
+
+    if (formulario.nombre.trim().length < 3) {
+      erroresCliente.push({
+        campo: "nombre",
+        mensaje: "El nombre debe tener al menos 3 caracteres",
+      });
+    }
+    if (formulario.sede.trim().length < 2) {
+      erroresCliente.push({ campo: "sede", mensaje: "La sede es obligatoria" });
+    }
+    if (!formulario.fecha) {
+      erroresCliente.push({
+        campo: "fecha",
+        mensaje: "La fecha es obligatoria",
+      });
+    }
+    if (formulario.cupoTotal === "" || Number(formulario.cupoTotal) < 0) {
+      erroresCliente.push({
+        campo: "cupoTotal",
+        mensaje: "El cupo total no puede ser negativo",
+      });
+    }
+
+    return erroresCliente;
+  }
+
   async function manejarEnvio(evento) {
     evento.preventDefault();
+
+    const erroresCliente = validarEnCliente();
+    if (erroresCliente.length > 0) {
+      setErrores(erroresCliente);
+      return;
+    }
+
     setEnviando(true);
     setErrores(null);
 
@@ -61,15 +102,20 @@ export default function JornadaForm() {
   }
 
   return (
-    <form onSubmit={manejarEnvio} className={styles.formulario}>
+    <form onSubmit={manejarEnvio} className={styles.formulario} noValidate>
       <div className={styles.campo}>
         <label htmlFor="nombre">Nombre</label>
         <input
           id="nombre"
           name="nombre"
+          placeholder="Ingrese el nombre de la jornada"
           value={formulario.nombre}
           onChange={manejarCambio}
+          minLength={3}
+          maxLength={150}
           required
+          className={tieneError("nombre") ? styles.inputConError : ""}
+          aria-invalid={tieneError("nombre")}
         />
       </div>
 
@@ -78,35 +124,47 @@ export default function JornadaForm() {
         <input
           id="sede"
           name="sede"
+          placeholder="Seleccione o ingrese la sede"
           value={formulario.sede}
           onChange={manejarCambio}
+          minLength={2}
+          maxLength={100}
           required
+          className={tieneError("sede") ? styles.inputConError : ""}
+          aria-invalid={tieneError("sede")}
         />
       </div>
 
-      <div className={styles.campo}>
-        <label htmlFor="fecha">Fecha</label>
-        <input
-          id="fecha"
-          name="fecha"
-          type="date"
-          value={formulario.fecha}
-          onChange={manejarCambio}
-          required
-        />
-      </div>
+      <div className={styles.filaDosColumnas}>
+        <div className={styles.campo}>
+          <label htmlFor="fecha">Fecha</label>
+          <input
+            id="fecha"
+            name="fecha"
+            type="date"
+            value={formulario.fecha}
+            onChange={manejarCambio}
+            required
+            className={tieneError("fecha") ? styles.inputConError : ""}
+            aria-invalid={tieneError("fecha")}
+          />
+        </div>
 
-      <div className={styles.campo}>
-        <label htmlFor="cupoTotal">Cupo total</label>
-        <input
-          id="cupoTotal"
-          name="cupoTotal"
-          type="number"
-          min="0"
-          value={formulario.cupoTotal}
-          onChange={manejarCambio}
-          required
-        />
+        <div className={styles.campo}>
+          <label htmlFor="cupoTotal">Cupo total</label>
+          <input
+            id="cupoTotal"
+            name="cupoTotal"
+            type="number"
+            min="0"
+            placeholder="Ej. 10"
+            value={formulario.cupoTotal}
+            onChange={manejarCambio}
+            required
+            className={tieneError("cupoTotal") ? styles.inputConError : ""}
+            aria-invalid={tieneError("cupoTotal")}
+          />
+        </div>
       </div>
 
       {errores && (

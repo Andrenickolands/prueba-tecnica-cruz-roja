@@ -1,11 +1,11 @@
-import { notFound } from 'next/navigation';
-import { obtenerJornadaPorId, obtenerInscripcionesPorJornada } from '@/lib/api';
-import InscripcionForm from './InscripcionForm';
-import CancelarInscripcionBoton from './CancelarInscripcionBoton';
-import EliminarJornadaBoton from './EliminarJornadaBoton';
-import LogoCruz from '@/components/LogoCruz';
-import EstadoVacio from '@/components/EstadoVacio';
-import styles from './detalle.module.css';
+import { notFound } from "next/navigation";
+import { obtenerJornadaPorId, obtenerInscripcionesPorJornada } from "@/lib/api";
+import InscripcionForm from "./InscripcionForm";
+import CancelarInscripcionBoton from "./CancelarInscripcionBoton";
+import EliminarJornadaBoton from "./EliminarJornadaBoton";
+import LogoCruz from "@/components/LogoCruz";
+import EstadoVacio from "@/components/EstadoVacio";
+import styles from "./detalle.module.css";
 
 export default async function DetalleJornada({ params }) {
   const { id } = await params;
@@ -17,21 +17,26 @@ export default async function DetalleJornada({ params }) {
   }
 
   const inscripciones = await obtenerInscripcionesPorJornada(id);
-  const inscripcionesConfirmadas = inscripciones.filter((i) => i.estado === 'CONFIRMADA');
+  const inscripcionesConfirmadas = inscripciones.filter(
+    (i) => i.estado === "CONFIRMADA",
+  );
 
   const cupoDisponible = jornada.cupo_total - jornada.cupo_ocupado;
   const sinCupo = cupoDisponible <= 0;
-  const jornadaVencida = new Date(jornada.fecha) < new Date().setHours(0, 0, 0, 0);
+  const jornadaVencida =
+    new Date(jornada.fecha) < new Date().setHours(0, 0, 0, 0);
   const puedeInscribirse = jornada.activa && !jornadaVencida && !sinCupo;
 
   return (
     <>
       <header className={styles.encabezado}>
-        <div className={styles.logoWrapper}>
-          <LogoCruz tamano={36} />
-        </div>
+        <a href="/jornadas" className={styles.logoWrapper}>
+          <LogoCruz tamano={44} />
+        </a>
         <div className={styles.encabezadoContenido}>
-          <a href="/jornadas" className={styles.volver}>← Volver al listado</a>
+          <a href="/jornadas" className={styles.volver}>
+            ← Volver al listado
+          </a>
         </div>
       </header>
 
@@ -40,10 +45,10 @@ export default async function DetalleJornada({ params }) {
           <h1>{jornada.nombre}</h1>
           <p className={styles.meta}>{jornada.sede}</p>
           <p className={styles.meta}>
-            {new Date(jornada.fecha).toLocaleDateString('es-CO', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
+            {new Date(jornada.fecha).toLocaleDateString("es-CO", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
             })}
           </p>
           <p className={styles.meta}>
@@ -54,12 +59,12 @@ export default async function DetalleJornada({ params }) {
             <p className={styles.avisoInactiva}>Esta jornada está inactiva.</p>
           )}
           {jornada.activa && jornadaVencida && (
-            <p className={styles.avisoInactiva}>La fecha de esta jornada ya pasó.</p>
+            <p className={styles.avisoInactiva}>
+              La fecha de esta jornada ya pasó.
+            </p>
           )}
 
-          {jornada.activa && (
-            <EliminarJornadaBoton jornadaId={id} />
-          )}
+          {jornada.activa && <EliminarJornadaBoton jornadaId={id} />}
         </section>
 
         <section className={styles.seccionInscripcion}>
@@ -71,8 +76,8 @@ export default async function DetalleJornada({ params }) {
             <div className={styles.sinCupoAviso}>
               <p>
                 {sinCupo
-                  ? 'Esta jornada no tiene cupo disponible en este momento.'
-                  : 'Esta jornada no admite nuevas inscripciones.'}
+                  ? "Esta jornada no tiene cupo disponible en este momento."
+                  : "Esta jornada no admite nuevas inscripciones."}
               </p>
             </div>
           )}
@@ -91,9 +96,12 @@ export default async function DetalleJornada({ params }) {
               {inscripcionesConfirmadas.map((inscripcion) => (
                 <li key={inscripcion.id} className={styles.itemInscrito}>
                   <div>
-                    <p className={styles.nombreInscrito}>{inscripcion.nombre_completo}</p>
+                    <p className={styles.nombreInscrito}>
+                      {inscripcion.nombre_completo}
+                    </p>
                     <p className={styles.meta}>
-                      {inscripcion.tipo_documento} {inscripcion.numero_documento}
+                      {inscripcion.tipo_documento}{" "}
+                      {inscripcion.numero_documento}
                     </p>
                   </div>
                   <CancelarInscripcionBoton inscripcionId={inscripcion.id} />

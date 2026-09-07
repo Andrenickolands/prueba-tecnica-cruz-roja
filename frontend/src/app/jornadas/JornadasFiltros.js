@@ -1,58 +1,48 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import styles from "./jornadas.module.css";
+import { useRouter, useSearchParams } from 'next/navigation';
+import styles from './jornadas.module.css';
 
 /**
- * Filtros del listado de jornadas
+ * Filtros del listado de jornadas.
  */
 export default function JornadasFiltros() {
   const router = useRouter();
   const parametrosActuales = useSearchParams();
 
-  const filtroActivo = parametrosActuales.get("filtro") || "todas";
+  const filtroActivo = parametrosActuales.get('filtro') || 'todas';
 
   function aplicarFiltro(nuevoFiltro) {
     const parametros = new URLSearchParams();
 
-    // El filtro "todas" no necesita query param — URL limpia.
-    if (nuevoFiltro !== "todas") {
-      parametros.set("filtro", nuevoFiltro);
+    if (nuevoFiltro !== 'todas') {
+      parametros.set('filtro', nuevoFiltro);
     }
 
     const queryString = parametros.toString();
-    router.push(`/jornadas${queryString ? `?${queryString}` : ""}`);
+    router.push(`/jornadas${queryString ? `?${queryString}` : ''}`);
   }
+
+  const opciones = [
+    { valor: 'todas', etiqueta: 'Todas' },
+    { valor: 'activas', etiqueta: 'Activas' },
+    { valor: 'con-cupo', etiqueta: 'Con cupo disponible' },
+    { valor: 'sin-cupo', etiqueta: 'Sin cupo' },
+    { valor: 'desactivadas', etiqueta: 'Desactivadas' },
+  ];
 
   return (
     <div className={styles.filtros}>
-      <button
-        onClick={() => aplicarFiltro("todas")}
-        className={
-          filtroActivo === "todas" ? styles.filtroActivo : styles.filtroBoton
-        }
-        aria-pressed={filtroActivo === "todas"}
-      >
-        Todas
-      </button>
-      <button
-        onClick={() => aplicarFiltro("con-cupo")}
-        className={
-          filtroActivo === "con-cupo" ? styles.filtroActivo : styles.filtroBoton
-        }
-        aria-pressed={filtroActivo === "con-cupo"}
-      >
-        Con cupo disponible
-      </button>
-      <button
-        onClick={() => aplicarFiltro("sin-cupo")}
-        className={
-          filtroActivo === "sin-cupo" ? styles.filtroActivo : styles.filtroBoton
-        }
-        aria-pressed={filtroActivo === "sin-cupo"}
-      >
-        Sin cupo
-      </button>
+      {opciones.map((opcion) => (
+        <button
+          key={opcion.valor}
+          onClick={() => aplicarFiltro(opcion.valor)}
+          className={filtroActivo === opcion.valor ? styles.filtroActivo : styles.filtroBoton}
+          aria-pressed={filtroActivo === opcion.valor}
+        >
+          {opcion.etiqueta}
+        </button>
+      ))}
     </div>
   );
 }

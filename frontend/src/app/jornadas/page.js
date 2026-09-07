@@ -18,24 +18,30 @@ export default async function PaginaJornadas({ searchParams }) {
 
   const jornadasSinFiltrarPorCupo = await obtenerJornadas(filtros);
 
-  // Filtro de cupo
-  const filtroCupo = parametrosBusqueda.filtro;
+  // Filtros de cupo: "todas", "activas", "con-cupo", "sin-cupo", "desactivadas"
+  const filtroSeleccionado = parametrosBusqueda.filtro;
   const jornadas = jornadasSinFiltrarPorCupo.filter((jornada) => {
-    if (filtroCupo === "con-cupo") {
+    if (filtroSeleccionado === "activas") {
+      return jornada.activa;
+    }
+    if (filtroSeleccionado === "desactivadas") {
+      return !jornada.activa;
+    }
+    if (filtroSeleccionado === "con-cupo") {
       return jornada.cupo_ocupado < jornada.cupo_total;
     }
-    if (filtroCupo === "sin-cupo") {
+    if (filtroSeleccionado === "sin-cupo") {
       return jornada.cupo_ocupado >= jornada.cupo_total;
     }
-    return true; // 'todas' o sin filtro
+    return true; 
   });
 
   return (
     <>
       <header className={styles.encabezado}>
-        <div className={styles.logoWrapper}>
+        <a href="/jornadas" className={styles.logoWrapper}>
           <LogoCruz />
-        </div>
+        </a>
         <div className={styles.encabezadoContenido}>
           <h1>Jornadas Cruz Roja</h1>
           <p>

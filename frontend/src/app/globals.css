@@ -20,20 +20,24 @@
   /* Tipografía: --fuente-base la define next/font (Public Sans) en layout.js */
   --tamano-texto-pequeno: 0.85rem;
   --tamano-texto-base: 1rem;
+  --tamano-texto-btn: 1.1rem;
   --tamano-subtitulo: 1.25rem;
   --tamano-titulo: 2rem;
 
   /* Espaciados */
   --espacio-xs: 4px;
   --espacio-sm: 8px;
+  --espacio-sm2: 14px;
   --espacio-md: 16px;
   --espacio-lg: 24px;
   --espacio-xl: 40px;
   --espacio-xxl: 64px;
   --espacio-xxxl: 80px;
+  --espacio-xxxxl: 120px;
 
   /* Bordes */
   --radio-borde: 10px;
+  --radio-borde-mediano: 14px;
   --radio-borde-pequeno: 6px;
 
   --ancho-maximo-contenido: 1040px;
@@ -178,6 +182,17 @@ button {
 .estado-vacio-descripcion {
   font-size: var(--tamano-texto-pequeno);
   max-width: 320px;
+}
+
+.footer-institucional {
+  background-color: var(--blanco);
+  padding: var(--espacio-lg) var(--espacio-md);
+  text-align: center;
+}
+
+.footer-institucional p {
+  color: var(--gris-piedra);
+  font-size: var(--tamano-texto-pequeno);
 }
 
 /* ============================================================

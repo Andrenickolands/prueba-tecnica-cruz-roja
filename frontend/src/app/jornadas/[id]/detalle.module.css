@@ -1,27 +1,26 @@
-/* ---------- Encabezado ---------- */
+/* ---------- Encabezado detalle.module.css ---------- */
 .encabezado {
   border-top: 4px solid var(--rojo-cruz);
   background-color: var(--blanco);
-  padding: var(--espacio-lg) 0;
-  position: relative;
+  padding: 1.6rem var(--espacio-xxl);
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-xxxxl);
 }
 
 .logoWrapper {
-  position: absolute;
-  left: var(--espacio-lg);
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .encabezadoContenido {
   max-width: var(--ancho-maximo-contenido);
-  margin: 0 auto;
-  padding: 0 var(--espacio-md);
+  flex: 1;
 }
 
 .volver {
-  font-size: var(--tamano-texto-pequeno);
-  font-weight: 600;
+  font-size: var(--tamano-texto-base);
+  font-weight: 700;
   color: var(--rojo-cruz);
 }
 
@@ -124,6 +123,15 @@
   border-color: var(--rojo-cruz);
 }
 
+.campo input::placeholder {
+  color: var(--gris-piedra);
+  opacity: 1;
+}
+
+.campo select {
+  color: var(--gris-piedra);
+}
+
 .listaErrores {
   background-color: var(--color-error-fondo);
   color: var(--color-error);
@@ -131,6 +139,10 @@
   padding: var(--espacio-sm) var(--espacio-md);
   border-radius: var(--radio-borde-pequeno);
   font-weight: 600;
+}
+
+.inputConError {
+  border-color: var(--color-error) !important;
 }
 
 .mensajeExito {
@@ -153,6 +165,7 @@
   font-weight: 700;
   transition: background-color 0.15s ease;
   align-self: flex-start;
+  box-shadow: 0 4px 8px rgba(214, 0, 28, 0.2);
 }
 
 .formulario button:hover:not(:disabled) {
@@ -168,7 +181,7 @@
 .listaInscritos {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-sm);
+  gap: var(--espacio-sm2);
 }
 
 .itemInscrito {
@@ -177,7 +190,7 @@
   align-items: center;
   background-color: var(--blanco);
   padding: var(--espacio-md);
-  border-radius: var(--radio-borde-pequeno);
+  border-radius: var(--radio-borde-mediano);
   border: 1px solid rgba(31, 35, 40, 0.08);
 }
 
@@ -270,7 +283,7 @@
 
 @media (max-width: 479px) {
   .encabezado {
-    padding-left: 70px;
+    padding: var(--espacio-lg) var(--espacio-md);
   }
 
   .resumenJornada h1 {

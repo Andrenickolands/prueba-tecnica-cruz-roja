@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './detalle.module.css';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./detalle.module.css";
 
 /**
  * Formulario para inscribir a una persona en una jornada.
  * Client Component: maneja estado de inputs y el envío.
- * Llama a /api/jornadas/[id]/inscripciones 
+ * Llama a /api/jornadas/[id]/inscripciones
  */
 export default function InscripcionForm({ jornadaId }) {
   const router = useRouter();
 
   const [formulario, setFormulario] = useState({
-    nombreCompleto: '',
-    tipoDocumento: 'CC',
-    numeroDocumento: '',
-    correo: '',
+    nombreCompleto: "",
+    tipoDocumento: "CC",
+    numeroDocumento: "",
+    correo: "",
   });
   const [enviando, setEnviando] = useState(false);
   const [errores, setErrores] = useState(null);
@@ -28,19 +28,43 @@ export default function InscripcionForm({ jornadaId }) {
     setExito(false);
   }
 
+  // Determina si un campo específico tiene error, para pintar su borde.
+  function tieneError(nombreCampo) {
+    return errores?.some((error) => error.campo === nombreCampo);
+  }
+
   // Validación básica en el cliente antes de enviar, para dar feedback
-  // inmediato sin esperar la respuesta del servidor. 
+  // inmediato sin esperar la respuesta del servidor.
   function validarEnCliente() {
     const erroresCliente = [];
 
     if (formulario.nombreCompleto.trim().length < 3) {
-      erroresCliente.push({ campo: 'nombreCompleto', mensaje: 'El nombre debe tener al menos 3 caracteres' });
+      erroresCliente.push({
+        campo: "nombreCompleto",
+        mensaje: "El nombre debe tener al menos 3 caracteres",
+      });
+    } else if (/[0-9]/.test(formulario.nombreCompleto)) {
+      // El nombre no debe contener dígitos.
+      erroresCliente.push({
+        campo: "nombreCompleto",
+        mensaje: "El nombre no puede contener números",
+      });
     }
-    if (formulario.numeroDocumento.trim().length < 4) {
-      erroresCliente.push({ campo: 'numeroDocumento', mensaje: 'El número de documento no es válido' });
+
+    if (!/^[0-9]{4,15}$/.test(formulario.numeroDocumento.trim())) {
+      // El número de documento solo debe tener dígitos, entre 4 y 15.
+      erroresCliente.push({
+        campo: "numeroDocumento",
+        mensaje:
+          "El número de documento debe contener solo números (4 a 15 dígitos)",
+      });
     }
-    if (!formulario.correo.includes('@')) {
-      erroresCliente.push({ campo: 'correo', mensaje: 'El correo no tiene un formato válido' });
+
+    if (!formulario.correo.includes("@")) {
+      erroresCliente.push({
+        campo: "correo",
+        mensaje: "El correo no tiene un formato válido",
+      });
     }
 
     return erroresCliente;
@@ -60,33 +84,43 @@ export default function InscripcionForm({ jornadaId }) {
     setErrores(null);
 
     try {
-      const respuesta = await fetch(`/api/jornadas/${jornadaId}/inscripciones`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formulario),
-      });
+      const respuesta = await fetch(
+        `/api/jornadas/${jornadaId}/inscripciones`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formulario),
+        },
+      );
 
       const datos = await respuesta.json();
 
       if (!respuesta.ok) {
         // El backend puede responder con `detalles` (validación) o
-        // `mensaje` + `codigoNegocio` 
+        // `mensaje` + `codigoNegocio`
         setErrores(datos.detalles || [{ mensaje: datos.mensaje }]);
         return;
       }
 
-      setFormulario({ nombreCompleto: '', tipoDocumento: 'CC', numeroDocumento: '', correo: '' });
+      setFormulario({
+        nombreCompleto: "",
+        tipoDocumento: "CC",
+        numeroDocumento: "",
+        correo: "",
+      });
       setExito(true);
       router.refresh();
     } catch (error) {
-      setErrores([{ mensaje: 'No se pudo conectar con el servidor. Intenta de nuevo.' }]);
+      setErrores([
+        { mensaje: "No se pudo conectar con el servidor. Intenta de nuevo." },
+      ]);
     } finally {
       setEnviando(false);
     }
   }
 
   return (
-    <form onSubmit={manejarEnvio} className={styles.formulario}>
+    <form onSubmit={manejarEnvio} className={styles.formulario} noValidate>
       <div className={styles.campo}>
         <label htmlFor="nombreCompleto">Nombre completo</label>
         <input
@@ -94,7 +128,12 @@ export default function InscripcionForm({ jornadaId }) {
           name="nombreCompleto"
           value={formulario.nombreCompleto}
           onChange={manejarCambio}
+          minLength={3}
+          maxLength={200}
           required
+          placeholder="Ingresa tu nombre"
+          className={tieneError("nombreCompleto") ? styles.inputConError : ""}
+          aria-invalid={tieneError("nombreCompleto")}
         />
       </div>
 
@@ -120,7 +159,15 @@ export default function InscripcionForm({ jornadaId }) {
           name="numeroDocumento"
           value={formulario.numeroDocumento}
           onChange={manejarCambio}
+          inputMode="numeric"
+          pattern="[0-9]{4,15}"
+          title="Solo números, entre 4 y 15 dígitos"
+          minLength={4}
+          maxLength={15}
           required
+          placeholder="Ingresa tu documento"
+          className={tieneError("numeroDocumento") ? styles.inputConError : ""}
+          aria-invalid={tieneError("numeroDocumento")}
         />
       </div>
 
@@ -133,23 +180,31 @@ export default function InscripcionForm({ jornadaId }) {
           value={formulario.correo}
           onChange={manejarCambio}
           required
+          placeholder="Ingresa tu correo"
+          className={tieneError("correo") ? styles.inputConError : ""}
+          aria-invalid={tieneError("correo")}
         />
       </div>
 
       {errores && (
         <ul className={styles.listaErrores} role="alert">
           {errores.map((error, indice) => (
-            <li key={indice}>{error.campo ? `${error.campo}: ` : ''}{error.mensaje}</li>
+            <li key={indice}>
+              {error.campo ? `${error.campo}: ` : ""}
+              {error.mensaje}
+            </li>
           ))}
         </ul>
       )}
 
       {exito && (
-        <p className={styles.mensajeExito} role="status">Inscripción registrada correctamente.</p>
+        <p className={styles.mensajeExito} role="status">
+          Inscripción registrada correctamente.
+        </p>
       )}
 
       <button type="submit" disabled={enviando}>
-        {enviando ? 'Inscribiendo...' : 'Inscribirse'}
+        {enviando ? "Inscribiendo..." : "Inscribirse"}
       </button>
     </form>
   );
