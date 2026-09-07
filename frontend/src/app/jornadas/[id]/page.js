@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { obtenerJornadaPorId, obtenerInscripcionesPorJornada } from "@/lib/api";
 import InscripcionForm from "./InscripcionForm";
 import CancelarInscripcionBoton from "./CancelarInscripcionBoton";
-import EliminarJornadaBoton from "./EliminarJornadaBoton";
+import AccionesJornada from "./AccionesJornada";
 import LogoCruz from "@/components/LogoCruz";
 import EstadoVacio from "@/components/EstadoVacio";
 import styles from "./detalle.module.css";
@@ -64,7 +64,7 @@ export default async function DetalleJornada({ params }) {
             </p>
           )}
 
-          {jornada.activa && <EliminarJornadaBoton jornadaId={id} />}
+          {jornada.activa && <AccionesJornada jornada={jornada} />}
         </section>
 
         <section className={styles.seccionInscripcion}>

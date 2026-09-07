@@ -278,6 +278,7 @@
 }
 
 @media (max-width: 479px) {
+
     .listaJornadas {
         grid-template-columns: 1fr;
     }
@@ -287,11 +288,18 @@
     }
 
     .encabezado {
+        flex-direction: column;
+        align-items: flex-start;
         padding: var(--espacio-lg) var(--espacio-md);
+        gap: var(--espacio-sm);
     }
 
     .encabezadoContenido h1 {
         font-size: 1.5rem;
+    }
+
+    .encabezadoContenido p {
+        font-size: var(--tamano-texto-pequeno);
     }
 
     .filtros {

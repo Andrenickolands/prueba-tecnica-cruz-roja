@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import ConfirmModal from '@/components/ConfirmModal';
-import styles from './detalle.module.css';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ConfirmModal from "@/components/ConfirmModal";
+import styles from "./detalle.module.css";
 
 /**
  * Botón para desactivar una jornada (borrado lógico).
@@ -21,22 +21,22 @@ export default function EliminarJornadaBoton({ jornadaId }) {
 
     try {
       const respuesta = await fetch(`/api/jornadas/${jornadaId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!respuesta.ok) {
         const datos = await respuesta.json().catch(() => ({}));
-        setError(datos.mensaje || 'No se pudo desactivar la jornada.');
+        setError(datos.mensaje || "No se pudo desactivar la jornada.");
         setModalAbierto(false);
         return;
       }
 
       // Tras desactivar, no tiene sentido quedarse en el detalle —
       // volvemos al listado, que ya no la mostrará como activa.
-      router.push('/jornadas');
+      router.push("/jornadas");
       router.refresh();
     } catch (err) {
-      setError('No se pudo conectar con el servidor. Intenta de nuevo.');
+      setError("No se pudo conectar con el servidor. Intenta de nuevo.");
       setModalAbierto(false);
     } finally {
       setEliminando(false);
@@ -44,14 +44,18 @@ export default function EliminarJornadaBoton({ jornadaId }) {
   }
 
   return (
-    <div className={styles.accionesJornada}>
+    <>
       <button
         onClick={() => setModalAbierto(true)}
-        className={styles.botonEliminarJornada}
+        className={`${styles.botonAccionJornada} ${styles.botonEliminarJornada}`}
       >
         Desactivar jornada
       </button>
-      {error && <p className={styles.errorInline} role="alert">{error}</p>}
+      {error && (
+        <p className={styles.errorInline} role="alert">
+          {error}
+        </p>
+      )}
 
       {modalAbierto && (
         <ConfirmModal
@@ -62,6 +66,6 @@ export default function EliminarJornadaBoton({ jornadaId }) {
           cargando={eliminando}
         />
       )}
-    </div>
+    </>
   );
 }

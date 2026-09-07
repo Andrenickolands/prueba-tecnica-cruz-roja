@@ -2,22 +2,19 @@
 -- Script de datos de prueba.
 -- Nota: se puede correr varias veces sin duplicar datos,
 -- porque cada INSERT verifica primero si el registro ya existe.
-
+--
 -- cd backend
--- chcp 65001 (Solo en windows)
+-- chcp 65001
 -- psql -U postgres -h localhost -d cruz_roja_jornadas -f src/db/DatosParaDB.sql
-
--- VERIFICAR 
--- psql -U postgres -h localhost -d cruz_roja_jornadas -c "SELECT nombre, sede, cupo_total, cupo_ocupado, activa FROM jornadas ORDER BY sede;"
 -- ============================================================
 
 -- ------------------------------------------------------------
 -- Jornadas
 -- ------------------------------------------------------------
 INSERT INTO jornadas (id, nombre, sede, fecha, cupo_total, cupo_ocupado, activa)
-SELECT gen_random_uuid(), 'Jornada de donación de sangre', 'Sede Chapinero', '2026-09-20', 10, 0, TRUE
+SELECT gen_random_uuid(), 'Jornada de donacion de sangre', 'Sede Chapinero', '2026-09-20', 10, 0, TRUE
 WHERE NOT EXISTS (
-    SELECT 1 FROM jornadas WHERE nombre = 'Jornada de donación de sangre' AND sede = 'Sede Chapinero'
+    SELECT 1 FROM jornadas WHERE nombre = 'Jornada de donacion de sangre' AND sede = 'Sede Chapinero'
 );
 
 INSERT INTO jornadas (id, nombre, sede, fecha, cupo_total, cupo_ocupado, activa)
@@ -27,15 +24,15 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO jornadas (id, nombre, sede, fecha, cupo_total, cupo_ocupado, activa)
-SELECT gen_random_uuid(), 'Capacitación primeros auxilios', 'Sede Kennedy', '2026-09-28', 8, 0, TRUE
+SELECT gen_random_uuid(), 'Capacitacion primeros auxilios', 'Sede Kennedy', '2026-09-28', 8, 0, TRUE
 WHERE NOT EXISTS (
-    SELECT 1 FROM jornadas WHERE nombre = 'Capacitación primeros auxilios' AND sede = 'Sede Kennedy'
+    SELECT 1 FROM jornadas WHERE nombre = 'Capacitacion primeros auxilios' AND sede = 'Sede Kennedy'
 );
 
 INSERT INTO jornadas (id, nombre, sede, fecha, cupo_total, cupo_ocupado, activa)
-SELECT gen_random_uuid(), 'Jornada de vacunación', 'Sede Kennedy', '2026-11-15', 20, 0, TRUE
+SELECT gen_random_uuid(), 'Jornada de vacunacion', 'Sede Kennedy', '2026-11-15', 20, 0, TRUE
 WHERE NOT EXISTS (
-    SELECT 1 FROM jornadas WHERE nombre = 'Jornada de vacunación' AND sede = 'Sede Kennedy'
+    SELECT 1 FROM jornadas WHERE nombre = 'Jornada de vacunacion' AND sede = 'Sede Kennedy'
 );
 
 INSERT INTO jornadas (id, nombre, sede, fecha, cupo_total, cupo_ocupado, activa)
@@ -56,7 +53,7 @@ WHERE NOT EXISTS (
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
 SELECT j.id, 'Ana Torres', 'CC', '1000000001', 'ana@correo.com', 'CONFIRMADA'
 FROM jornadas j
-WHERE j.nombre = 'Jornada de donación de sangre'
+WHERE j.nombre = 'Jornada de donacion de sangre'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000001'
   );
@@ -64,21 +61,21 @@ WHERE j.nombre = 'Jornada de donación de sangre'
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
 SELECT j.id, 'Carlos Ruiz', 'CC', '1000000002', 'carlos@correo.com', 'CONFIRMADA'
 FROM jornadas j
-WHERE j.nombre = 'Jornada de donación de sangre'
+WHERE j.nombre = 'Jornada de donacion de sangre'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000002'
   );
 
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
-SELECT j.id, 'Laura Gómez', 'TI', '1000000003', 'laura@correo.com', 'CANCELADA'
+SELECT j.id, 'Laura Gomez', 'TI', '1000000003', 'laura@correo.com', 'CANCELADA'
 FROM jornadas j
-WHERE j.nombre = 'Jornada de donación de sangre'
+WHERE j.nombre = 'Jornada de donacion de sangre'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000003'
   );
 
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
-SELECT j.id, 'Pedro Sánchez', 'CC', '1000000004', 'pedro@correo.com', 'CONFIRMADA'
+SELECT j.id, 'Pedro Sanchez', 'CC', '1000000004', 'pedro@correo.com', 'CONFIRMADA'
 FROM jornadas j
 WHERE j.nombre = 'Brigada de salud comunitaria'
   AND NOT EXISTS (
@@ -86,25 +83,25 @@ WHERE j.nombre = 'Brigada de salud comunitaria'
   );
 
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
-SELECT j.id, 'María Díaz', 'CE', '1000000005', 'maria@correo.com', 'CONFIRMADA'
+SELECT j.id, 'Maria Diaz', 'CE', '1000000005', 'maria@correo.com', 'CONFIRMADA'
 FROM jornadas j
-WHERE j.nombre = 'Capacitación primeros auxilios'
+WHERE j.nombre = 'Capacitacion primeros auxilios'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000005'
   );
 
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
-SELECT j.id, 'Jorge López', 'CC', '1000000006', 'jorge@correo.com', 'CONFIRMADA'
+SELECT j.id, 'Jorge Lopez', 'CC', '1000000006', 'jorge@correo.com', 'CONFIRMADA'
 FROM jornadas j
-WHERE j.nombre = 'Capacitación primeros auxilios'
+WHERE j.nombre = 'Capacitacion primeros auxilios'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000006'
   );
 
 INSERT INTO inscripciones (jornada_id, nombre_completo, tipo_documento, numero_documento, correo, estado)
-SELECT j.id, 'Sofía Ramírez', 'CC', '1000000007', 'sofia@correo.com', 'CONFIRMADA'
+SELECT j.id, 'Sofia Ramirez', 'CC', '1000000007', 'sofia@correo.com', 'CONFIRMADA'
 FROM jornadas j
-WHERE j.nombre = 'Jornada de vacunación'
+WHERE j.nombre = 'Jornada de vacunacion'
   AND NOT EXISTS (
       SELECT 1 FROM inscripciones i WHERE i.jornada_id = j.id AND i.numero_documento = '1000000007'
   );

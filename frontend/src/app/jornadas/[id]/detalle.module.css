@@ -154,7 +154,7 @@
   font-weight: 600;
 }
 
-.formulario button {
+.formulario button:not(.botonAccionJornada) {
   padding: 12px var(--espacio-md);
   background-color: var(--rojo-cruz);
   color: var(--blanco);
@@ -168,11 +168,11 @@
   box-shadow: 0 4px 8px rgba(214, 0, 28, 0.2);
 }
 
-.formulario button:hover:not(:disabled) {
+.formulario button:not(.botonAccionJornada):hover:not(:disabled) {
   background-color: var(--rojo-oscuro);
 }
 
-.formulario button:disabled {
+.formulario button:not(.botonAccionJornada):disabled {
   background-color: var(--gris-piedra);
   cursor: not-allowed;
 }
@@ -232,25 +232,89 @@
   font-size: 0.75rem;
 }
 
-.accionesJornada {
-  margin-top: var(--espacio-md);
-}
+/* ---------- BOTONES ---------- */
 
-.botonEliminarJornada {
+.botonAccionJornada {
   padding: var(--espacio-sm) var(--espacio-md);
-  background-color: var(--blanco);
-  color: var(--color-error);
-  border: 1.5px solid var(--color-error);
   border-radius: var(--radio-borde-pequeno);
   cursor: pointer;
   font-size: var(--tamano-texto-pequeno);
   font-weight: 700;
+  line-height: 1.2;
+  border: 1.5px solid transparent;
   transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* ---------- Eliminar ---------- */
+
+.botonEliminarJornada {
+  background-color: var(--blanco);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .botonEliminarJornada:hover {
   background-color: var(--color-error);
   color: var(--blanco);
+}
+
+/* ---------- Editar ---------- */
+
+
+.accionesJornada {
+  display: flex;
+  gap: var(--espacio-sm);
+  margin-top: var(--espacio-md);
+}
+
+.botonEditarJornada {
+  background-color: var(--color-azul);
+  color: var(--blanco);
+  border-color: var(--color-azul);
+  box-shadow: 0 4px 8px rgba(29, 127, 206, 0.2);
+}
+
+.botonEditarJornada:hover {
+  background-color: var(--blanco);
+  color: var(--color-azul);
+  border-color: var(--color-azul);
+}
+
+.accionesEdicion {
+  display: flex;
+  gap: var(--espacio-sm);
+  align-self: flex-start;
+}
+
+.botonGuardarEdicion {
+  background-color: var(--color-azul);
+  color: var(--blanco);
+  box-shadow: 0 4px 8px rgba(29, 127, 206, 0.2);
+}
+
+.botonGuardarEdicion:hover:not(:disabled) {
+  background-color: var(--color-azul-oscuro);
+}
+
+.botonGuardarEdicion:disabled {
+  background-color: var(--gris-piedra);
+  cursor: not-allowed;
+}
+
+.botonCancelarEdicion {
+  background-color: var(--blanco);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.botonCancelarEdicion:hover:not(:disabled) {
+  background-color: var(--color-error);
+  color: var(--blanco);
+}
+
+.botonCancelarEdicion:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ============================================================
@@ -283,7 +347,10 @@
 
 @media (max-width: 479px) {
   .encabezado {
+    flex-direction: column;
+    align-items: flex-start;
     padding: var(--espacio-lg) var(--espacio-md);
+    gap: var(--espacio-sm);
   }
 
   .resumenJornada h1 {

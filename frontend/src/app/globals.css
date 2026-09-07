@@ -16,6 +16,8 @@
   --ambar-cupo-fondo: #faf1e0;
   --color-error: #a30014;
   --color-error-fondo: #fbe9ea;
+  --color-azul: #1D7FCE;
+  --color-azul-oscuro: #1667a8;
 
   /* Tipografía: --fuente-base la define next/font (Public Sans) en layout.js */
   --tamano-texto-pequeno: 0.85rem;
