@@ -4,8 +4,11 @@
 Aplicación web para publicar jornadas de la Cruz Roja, administrar el cupo disponible y registrar inscripciones de manera confiable, con control estricto de concurrencia.
 
 **Backend en producción:** https://cruz-roja-backend.onrender.com
+
 **Frontend en producción:** https://cruz-roja-frontend-a6oj.onrender.com
+
 **Diseño (Figma):** https://www.figma.com/proto/SjQU1UgBXNuAfo6Ve6rlOh/Prueba-t%C3%A9cnica-cruz-roja?node-id=0-1&t=9QUjezK3E71tGvGP-1
+
 
 > Los servicios de Render están en el plan free: si el backend lleva más de 15 minutos sin tráfico, se duerme y la primera petición tarda 30-60 segundos en responder. No es un bug, es la limitación del hosting gratuito.
 
